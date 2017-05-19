@@ -1,0 +1,21 @@
+/*-------------------------------------------------------------------
+
+ config.h.in
+
+ Copyright (c) 2017 Chuhai
+
+ This file is part of Preedit Tweak, a Geany plugin.
+ This software is released under the MIT License, see LICENSE.txt.
+
+-------------------------------------------------------------------*/
+
+#ifndef _CONFIG_H_
+#define _CONFIG_H_
+
+#define PACKAGE                   "@PACKAGE@"
+#define PACKAGE_VERSION_MAJOR     @PACKAGE_VERSION_MAJOR@
+#define PACKAGE_VERSION_MINOR     @PACKAGE_VERSION_MINOR@
+#define PACKAGE_VERSION_BUILD     @PACKAGE_VERSION_BUILD@
+#define PACKAGE_VERSION           "@PACKAGE_VERSION@"
+
+#endif /* _CONFIG_H_ */

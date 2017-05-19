@@ -10,6 +10,7 @@
 -------------------------------------------------------------------*/
 
 #include <geanyplugin.h>
+#include "config.h"
 
 #define	INDICATOR_COUNT				2
 
@@ -195,10 +196,10 @@ static gboolean on_init_preedit_tweak(GeanyPlugin *plugin, gpointer pdata)
 
 	/* initialize */
 	pt_data = g_new0(PreeditTweakData, 1);
-	pt_data->plugin_name = g_string_new("preedit_tweak");
+	pt_data->plugin_name = g_string_new(PACKAGE);
 	pt_data->config_file = g_string_new(g_build_path(G_DIR_SEPARATOR_S,
 													 geany_data->app->configdir,
-													 "plugins", "preedit_tweak",
+													 "plugins", pt_data->plugin_name->str,
 													 "preedit_tweak.conf", NULL));
 	pt_data->geany_data = geany_data;
 	pt_data->enable_inline_preedit = FALSE;
@@ -374,7 +375,7 @@ G_MODULE_EXPORT void geany_load_module(GeanyPlugin *plugin)
 {
 	plugin->info->name = "Preedit Tweak";
 	plugin->info->description = "Tweaks for the preedit appearances.";
-	plugin->info->version = "0.1.0";
+	plugin->info->version = PACKAGE_VERSION;
 	plugin->info->author = "Chuhai";
 	plugin->funcs->init = on_init_preedit_tweak;
 	plugin->funcs->cleanup = on_cleanup_preedit_tweak;
