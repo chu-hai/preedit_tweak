@@ -1,3 +1,14 @@
+/*-------------------------------------------------------------------
+
+ preedit_tweak.c
+
+ Copyright (c) 2017 Chuhai
+
+ This file is part of Preedit Tweak, a Geany plugin.
+ This software is released under the MIT License, see LICENSE.txt.
+
+-------------------------------------------------------------------*/
+
 #include <geanyplugin.h>
 
 #define	INDICATOR_COUNT				2
