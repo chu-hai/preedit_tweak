@@ -44,18 +44,18 @@ typedef struct {
 } AttrComboBoxItem;
 
 static const AttrComboBoxItem combobox_item[] = {
-	{"No effect",						INDIC_HIDDEN},
+	{"No visual effect",				INDIC_HIDDEN},
 	{"Foreground color",				INDIC_TEXTFORE},
 	{"Underline (Squiggle 1)",			INDIC_SQUIGGLE},
 	{"Underline (Squiggle 2)",			INDIC_SQUIGGLELOW},
 	{"Underline (Squiggle 3)",			INDIC_SQUIGGLEPIXMAP},
 	{"Underline (T Shapes)",			INDIC_TT},
 	{"Underline (Diagonal hatching)",	INDIC_DIAGONAL},
-	{"Underline (Strike-through)",		INDIC_STRIKE},
 	{"Underline (Dash)",				INDIC_DASH},
 	{"Underline (Dot)",					INDIC_DOTS},
 	{"Underline (Thick-line)",			INDIC_COMPOSITIONTHICK},
 	{"Underline (Thin-line)",			INDIC_COMPOSITIONTHIN},
+	{"Strikethrough",					INDIC_STRIKE},
 	{"Box (Normal border)",				INDIC_BOX},
 	{"Box (Dot border)",				INDIC_DOTBOX},
 	{"Box and Fill (Rounded border)",	INDIC_ROUNDBOX},
