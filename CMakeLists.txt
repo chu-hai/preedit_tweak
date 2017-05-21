@@ -28,8 +28,8 @@ set(PLUGIN_SOURCES
 	src/preedit_tweak.c
 )
 
-find_package(PkgConfig)
-pkg_check_modules(GEANY geany)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GEANY geany>=1.27)
 if(NOT GEANY_FOUND)
 	message(FATAL_ERROR "${RED}Geany is not installed.${RESET}")
 endif()
