@@ -22,15 +22,11 @@ set(PACKAGE_VERSION_MINOR 1)
 set(PACKAGE_VERSION_BUILD 0)
 set(PACKAGE_VERSION "${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}.${PACKAGE_VERSION_BUILD}")
 
+option(ENABLE_NLS "Enable National language support." ON)
+
 set(PLUGIN_SOURCES
 	src/preedit_tweak.c
 )
-
-configure_file(
-	"${PROJECT_SOURCE_DIR}/src/config.h.in"
-	"${PROJECT_BINARY_DIR}/src/config.h"
-)
-include_directories("${PROJECT_BINARY_DIR}/src")
 
 find_package(PkgConfig)
 pkg_check_modules(GEANY geany)
@@ -52,7 +48,31 @@ install(
 	DESTINATION	"${PACKAGE_PLUGIN_DIR}"
 )
 
+if(NOT PACKAGE_SHARE_DIR)
+    set(PACKAGE_SHARE_DIR   "${CMAKE_INSTALL_PREFIX}/share")
+endif()
+
+if(ENABLE_NLS)
+    set(GETTEXT_PACKAGE "geany_plugin_${PACKAGE}")
+    if(NOT PACKAGE_LOCALE_DIR)
+        set(PACKAGE_LOCALE_DIR  "${PACKAGE_SHARE_DIR}/locale")
+    endif()
+    add_subdirectory(po)
+endif()
+
+configure_file(
+	"${PROJECT_SOURCE_DIR}/src/config.h.in"
+	"${PROJECT_BINARY_DIR}/src/config.h"
+)
+include_directories("${PROJECT_BINARY_DIR}/src")
+
+message("")
+message(STATUS "${WHITE}ENABLE_NLS:           ${CYAN}${ENABLE_NLS}${RESET}")
 message("")
 message(STATUS "${WHITE}CMAKE_INSTALL_PREFIX: ${YELLOW}${CMAKE_INSTALL_PREFIX}${RESET}")
 message(STATUS "${WHITE}PACKAGE_PLUGIN_DIR:   ${YELLOW}${PACKAGE_PLUGIN_DIR}${RESET}")
+message(STATUS "${WHITE}PACKAGE_SHARE_DIR:    ${YELLOW}${PACKAGE_SHARE_DIR}${RESET}")
+message(STATUS "${WHITE}PACKAGE_LOCALE_DIR:   ${YELLOW}${PACKAGE_LOCALE_DIR}${RESET}")
+message("")
+message(STATUS "${WHITE}GETTEXT_PACKAGE:      ${YELLOW}${GETTEXT_PACKAGE}${RESET}")
 message("")

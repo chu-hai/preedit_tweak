@@ -9,13 +9,13 @@
 
 -------------------------------------------------------------------*/
 
-#include <geanyplugin.h>
 #include "config.h"
+#include <geanyplugin.h>
 
 #define	INDICATOR_COUNT				2
 
-#define	MSG_KEYFILE_SAVE_FAILED		"Failed to save configuration file.\n\nFilename: '%s'\n\n%s"
-#define MSG_DIR_CREATE_FAILED		"Failed to create directory.\n\nDirectory: '%s'\n\n%s"
+#define	MSG_KEYFILE_SAVE_FAILED		N_("Failed to save configuration file.\n\nFilename: '%s'\n\n%s")
+#define MSG_DIR_CREATE_FAILED		N_("Failed to create directory.\n\nDirectory: '%s'\n\n%s")
 
 
 /*--------------------------------------------------*/
@@ -30,8 +30,8 @@ typedef struct {
 } IndicatorDefinition;
 
 static const IndicatorDefinition indicator_defs[INDICATOR_COUNT] = {
-	{"Input",	"Input String",		INDIC_IME + 0,	INDIC_DOTS,			0x0000ff},
-	{"Target",	"Target String",	INDIC_IME + 1,	INDIC_STRAIGHTBOX,	0x0000ff}
+	{"Input",	N_("Input String"),		INDIC_IME + 0,	INDIC_DOTS,			0x0000ff},
+	{"Target",	N_("Target String"),	INDIC_IME + 1,	INDIC_STRAIGHTBOX,	0x0000ff}
 };
 
 
@@ -44,23 +44,23 @@ typedef struct {
 } AttrComboBoxItem;
 
 static const AttrComboBoxItem combobox_item[] = {
-	{"No visual effect",				INDIC_HIDDEN},
-	{"Foreground color",				INDIC_TEXTFORE},
-	{"Underline (Squiggle 1)",			INDIC_SQUIGGLE},
-	{"Underline (Squiggle 2)",			INDIC_SQUIGGLELOW},
-	{"Underline (Squiggle 3)",			INDIC_SQUIGGLEPIXMAP},
-	{"Underline (T Shapes)",			INDIC_TT},
-	{"Underline (Diagonal hatching)",	INDIC_DIAGONAL},
-	{"Underline (Dash)",				INDIC_DASH},
-	{"Underline (Dot)",					INDIC_DOTS},
-	{"Underline (Thick-line)",			INDIC_COMPOSITIONTHICK},
-	{"Underline (Thin-line)",			INDIC_COMPOSITIONTHIN},
-	{"Strikethrough",					INDIC_STRIKE},
-	{"Box (Normal border)",				INDIC_BOX},
-	{"Box (Dot border)",				INDIC_DOTBOX},
-	{"Box and Fill (Rounded border)",	INDIC_ROUNDBOX},
-	{"Box and Fill (Normal border 1)",	INDIC_STRAIGHTBOX},
-	{"Box and Fill (Normal border 2)",	INDIC_FULLBOX},
+	{N_("No visual effect"),				INDIC_HIDDEN},
+	{N_("Foreground color"),				INDIC_TEXTFORE},
+	{N_("Underline (Squiggle 1)"),			INDIC_SQUIGGLE},
+	{N_("Underline (Squiggle 2)"),			INDIC_SQUIGGLELOW},
+	{N_("Underline (Squiggle 3)"),			INDIC_SQUIGGLEPIXMAP},
+	{N_("Underline (T Shapes)"),			INDIC_TT},
+	{N_("Underline (Diagonal hatching)"),	INDIC_DIAGONAL},
+	{N_("Underline (Dash)"),				INDIC_DASH},
+	{N_("Underline (Dot)"),					INDIC_DOTS},
+	{N_("Underline (Thick-line)"),			INDIC_COMPOSITIONTHICK},
+	{N_("Underline (Thin-line)"),			INDIC_COMPOSITIONTHIN},
+	{N_("Strikethrough"),					INDIC_STRIKE},
+	{N_("Box (Normal border)"),				INDIC_BOX},
+	{N_("Box (Dot border)"),				INDIC_DOTBOX},
+	{N_("Box and Fill (Rounded border)"),	INDIC_ROUNDBOX},
+	{N_("Box and Fill (Normal border 1)"),	INDIC_STRAIGHTBOX},
+	{N_("Box and Fill (Normal border 2)"),	INDIC_FULLBOX},
 	{NULL, 0}
 };
 
@@ -298,12 +298,12 @@ static void on_configure_response(GtkDialog *dialog, gint response, UI_ConfigDia
 			write_data = g_key_file_to_data(config, NULL, NULL);
 			ret = utils_write_file(pt_data->config_file->str, write_data);
 			if (ret != 0) {
-				dialogs_show_msgbox(GTK_MESSAGE_ERROR, MSG_KEYFILE_SAVE_FAILED, pt_data->config_file->str, g_strerror(ret));
+				dialogs_show_msgbox(GTK_MESSAGE_ERROR, _(MSG_KEYFILE_SAVE_FAILED), pt_data->config_file->str, g_strerror(ret));
 			}
 			g_free(write_data);
 		}
 		else {
-			dialogs_show_msgbox(GTK_MESSAGE_ERROR, MSG_DIR_CREATE_FAILED, config_dir, g_strerror(ret));
+			dialogs_show_msgbox(GTK_MESSAGE_ERROR, _(MSG_DIR_CREATE_FAILED), config_dir, g_strerror(ret));
 		}
 
 		g_free(config_dir);
@@ -330,12 +330,12 @@ static GtkWidget *on_configure_preedit_tweak(GeanyPlugin *plugin, GtkDialog *dia
 	ui->vbox_base = gtk_vbox_new(FALSE, 0);
 
 	/* check button */
-	ui->chk_enable_inline = gtk_check_button_new_with_label("Enable inline preediting");
+	ui->chk_enable_inline = gtk_check_button_new_with_label(_("Enable inline preediting"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ui->chk_enable_inline), pt_data->enable_inline_preedit);
 	gtk_box_pack_start(GTK_BOX(ui->vbox_base), ui->chk_enable_inline, FALSE, TRUE, 10);
 
 	/* appearance frame */
-	ui->frame_appearance = gtk_frame_new("Appearance of inline preedit");
+	ui->frame_appearance = gtk_frame_new(_("Appearance of inline preedit"));
 	gtk_box_pack_start(GTK_BOX(ui->vbox_base), ui->frame_appearance, TRUE, TRUE, 10);
 	ui->vbox_appearance = gtk_vbox_new(FALSE, 0);
 	gtk_container_add(GTK_CONTAINER(ui->frame_appearance), ui->vbox_appearance);
@@ -345,12 +345,12 @@ static GtkWidget *on_configure_preedit_tweak(GeanyPlugin *plugin, GtkDialog *dia
 		attr = &pt_data->current_attr[i];
 		ui_attr = &ui->attr[i];
 		ui_attr->hbox = gtk_hbox_new(FALSE, 10);
-		ui_attr->label_attr = gtk_label_new(indicator_defs[i].desc);
+		ui_attr->label_attr = gtk_label_new(_(indicator_defs[i].desc));
 		ui_attr->combo_attr = gtk_combo_box_text_new();
 		ui_attr->color_attr = gtk_color_button_new();
 
 		for (j = 0; combobox_item[j].desc; j++) {
-			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ui_attr->combo_attr), combobox_item[j].desc);
+			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ui_attr->combo_attr), _(combobox_item[j].desc));
 		}
 
 		idx = get_combobox_index(attr->indicator_style);
@@ -373,8 +373,11 @@ static GtkWidget *on_configure_preedit_tweak(GeanyPlugin *plugin, GtkDialog *dia
 
 G_MODULE_EXPORT void geany_load_module(GeanyPlugin *plugin)
 {
+#ifdef ENABLE_NLS
+	main_locale_init(PACKAGE_LOCALE_DIR, GETTEXT_PACKAGE);
+#endif
 	plugin->info->name = "Preedit Tweak";
-	plugin->info->description = "Tweaks for the preedit appearances.";
+	plugin->info->description = _("Tweaks for the preedit appearances.");
 	plugin->info->version = PACKAGE_VERSION;
 	plugin->info->author = "Chuhai";
 	plugin->funcs->init = on_init_preedit_tweak;

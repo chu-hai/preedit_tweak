@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the preedit_tweak package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: preedit_tweak 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-21 01:07+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/preedit_tweak.c:17
+#, c-format
+msgid ""
+"Failed to save configuration file.\n"
+"\n"
+"Filename: '%s'\n"
+"\n"
+"%s"
+msgstr ""
+
+#: src/preedit_tweak.c:18
+#, c-format
+msgid ""
+"Failed to create directory.\n"
+"\n"
+"Directory: '%s'\n"
+"\n"
+"%s"
+msgstr ""
+
+#: src/preedit_tweak.c:33
+msgid "Input String"
+msgstr ""
+
+#: src/preedit_tweak.c:34
+msgid "Target String"
+msgstr ""
+
+#: src/preedit_tweak.c:47
+msgid "No visual effect"
+msgstr ""
+
+#: src/preedit_tweak.c:48
+msgid "Foreground color"
+msgstr ""
+
+#: src/preedit_tweak.c:49
+msgid "Underline (Squiggle 1)"
+msgstr ""
+
+#: src/preedit_tweak.c:50
+msgid "Underline (Squiggle 2)"
+msgstr ""
+
+#: src/preedit_tweak.c:51
+msgid "Underline (Squiggle 3)"
+msgstr ""
+
+#: src/preedit_tweak.c:52
+msgid "Underline (T Shapes)"
+msgstr ""
+
+#: src/preedit_tweak.c:53
+msgid "Underline (Diagonal hatching)"
+msgstr ""
+
+#: src/preedit_tweak.c:54
+msgid "Underline (Dash)"
+msgstr ""
+
+#: src/preedit_tweak.c:55
+msgid "Underline (Dot)"
+msgstr ""
+
+#: src/preedit_tweak.c:56
+msgid "Underline (Thick-line)"
+msgstr ""
+
+#: src/preedit_tweak.c:57
+msgid "Underline (Thin-line)"
+msgstr ""
+
+#: src/preedit_tweak.c:58
+msgid "Strikethrough"
+msgstr ""
+
+#: src/preedit_tweak.c:59
+msgid "Box (Normal border)"
+msgstr ""
+
+#: src/preedit_tweak.c:60
+msgid "Box (Dot border)"
+msgstr ""
+
+#: src/preedit_tweak.c:61
+msgid "Box and Fill (Rounded border)"
+msgstr ""
+
+#: src/preedit_tweak.c:62
+msgid "Box and Fill (Normal border 1)"
+msgstr ""
+
+#: src/preedit_tweak.c:63
+msgid "Box and Fill (Normal border 2)"
+msgstr ""
+
+#: src/preedit_tweak.c:333
+msgid "Enable inline preediting"
+msgstr ""
+
+#: src/preedit_tweak.c:338
+msgid "Appearance of inline preedit"
+msgstr ""
+
+#: src/preedit_tweak.c:380
+msgid "Tweaks for the preedit appearances."
+msgstr ""
