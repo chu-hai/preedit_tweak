@@ -1,0 +1,35 @@
+# Maintainer: Chuhai
+# Contributor:
+
+pkgname=preedit_tweak-git
+pkgver=0.0.0
+pkgrel=1
+pkgdesc="Tweaks for the Geany's preedit appearance."
+arch=('i686' 'x86_64')
+url="https://github.com/chu-hai/preedit_tweak"
+license=('MIT')
+depends=('geany')
+makedepends=('git' 'cmake')
+source=("${pkgname}"::'git+https://github.com/chu-hai/preedit_tweak')
+md5sums=('SKIP')
+
+pkgver() {
+	cd "${srcdir}/${pkgname}"
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+	cd "${srcdir}"
+	mkdir build
+}
+
+build() {
+	cd "${srcdir}/build"
+	cmake ${srcdir}/${pkgname} -DCMAKE_INSTALL_PREFIX=/usr
+	make
+}
+
+package() {
+	cd "${srcdir}/build"
+	make DESTDIR="${pkgdir}" install
+}
