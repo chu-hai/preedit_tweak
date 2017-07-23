@@ -73,3 +73,6 @@ add_custom_target(po_update
 add_custom_target(mo_update ALL
 	DEPENDS ${_gmofiles}
 )
+
+set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM TRUE)
+set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${_gmofiles}")
