@@ -31,7 +31,7 @@ set(PLUGIN_SOURCES
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GEANY geany>=1.27)
 if(NOT GEANY_FOUND)
-	message(FATAL_ERROR "${RED}Geany is not installed.${RESET}")
+	message(FATAL_ERROR "${RED}Geany or required packages are not installed.${RESET}")
 endif()
 include_directories(${GEANY_INCLUDE_DIRS})
 add_definitions(${GEANY_CFLAGS_OTHER})
@@ -66,6 +66,19 @@ configure_file(
 )
 include_directories("${PROJECT_BINARY_DIR}/src")
 
+find_program(CMD_AWK_EXECUTABLE awk)
+find_program(CMD_CUT_EXECUTABLE cut)
+if(CMD_AWK_EXECUTABLE AND CMD_CUT_EXECUTABLE)
+    execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} --print-requires geany
+                    COMMAND ${CMD_AWK_EXECUTABLE} "/^gtk\\+-/{print}"
+                    COMMAND ${CMD_AWK_EXECUTABLE} "{print $3}"
+                    COMMAND ${CMD_CUT_EXECUTABLE} -d. -f1
+                    OUTPUT_VARIABLE _used_gtk_version OUTPUT_STRIP_TRAILING_WHITESPACE)
+    set(USED_GTK_VERSION "(GTK${_used_gtk_version})")
+endif()
+
+message("")
+message(STATUS "${GREEN}Geany Version:        ${YELLOW}${GEANY_VERSION} ${USED_GTK_VERSION}${RESET}")
 message("")
 message(STATUS "${WHITE}ENABLE_NLS:           ${CYAN}${ENABLE_NLS}${RESET}")
 message("")
