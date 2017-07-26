@@ -11,6 +11,9 @@
 
 #include "config.h"
 #include <geanyplugin.h>
+#include <math.h>
+
+#include "gtk_compat.h"
 
 #define	INDICATOR_COUNT				2
 
@@ -92,7 +95,7 @@ typedef struct {
 	gchar		*name;
 	int			indicator;
 	int			indicator_style;
-	GdkColor	fore_color;
+	GDK_COLOR	fore_color;
 } AttrDataStore;
 
 typedef struct {
@@ -121,27 +124,46 @@ static PluginCallback plugin_callbacks[] = {
 /*--------------------------------------------------*/
 /*	Function Definition								*/
 /*--------------------------------------------------*/
-static GdkColor int_to_color(guint32 value)
+static GDK_COLOR int_to_color(guint32 value)
 {
-	GdkColor color;
+	GDK_COLOR color;
+#ifdef USE_GTK2
 	color.red    = ((value & 0xff0000) >> 16) * 0x101;
 	color.green  = ((value & 0x00ff00) >>  8) * 0x101;
 	color.blue   = ((value & 0x0000ff) >>  0) * 0x101;
+#else
+	color.red    = (double)((value & 0xff0000) >> 16) / 255;
+	color.green  = (double)((value & 0x00ff00) >>  8) / 255;
+	color.blue   = (double)((value & 0x0000ff) >>  0) / 255;
+	color.alpha  = 1.0;
+#endif
 	return color;
 }
 
-static guint32 color_to_int(const GdkColor *color)
+static guint32 color_to_int(const GDK_COLOR *color)
 {
+#ifdef USE_GTK2
 	return (((color->red   / 0x101) << 16) |
 			((color->green / 0x101) <<  8) |
 			((color->blue  / 0x101) <<  0));
+#else
+	return (((guint32)floor(color->red   * 255 + 0.5) << 16) |
+			((guint32)floor(color->green * 255 + 0.5) <<  8) |
+			((guint32)floor(color->blue  * 255 + 0.5) <<  0));
+#endif
 }
 
-static guint32 color_to_scicolor(GdkColor *color)
+static guint32 color_to_scicolor(GDK_COLOR *color)
 {
+#ifdef USE_GTK2
 	return (((color->red   / 0x101) <<  0) |
 			((color->green / 0x101) <<  8) |
 			((color->blue  / 0x101) << 16));
+#else
+	return (((guint32)floor(color->red   * 255 + 0.5) <<  0) |
+			((guint32)floor(color->green * 255 + 0.5) <<  8) |
+			((guint32)floor(color->blue  * 255 + 0.5) << 16));
+#endif
 }
 
 static void change_preedit_mode(GeanyDocument *doc)
@@ -222,7 +244,7 @@ static gboolean on_init_preedit_tweak(GeanyPlugin *plugin, gpointer pdata)
 			attr = &pt_data->current_attr[i];
 			attr->indicator_style = g_key_file_get_integer(config, "indicator_style", attr->name, NULL);
 			color_work = g_key_file_get_string(config, "fore_color", attr->name, NULL);
-			gdk_color_parse(color_work, &attr->fore_color);
+			GDK_COLOR_PARSE(color_work, &attr->fore_color);
 			g_free(color_work);
 		}
 	}
@@ -275,7 +297,7 @@ static void on_configure_response(GtkDialog *dialog, gint response, UI_ConfigDia
 			attr = &pt_data->current_attr[i];
 			ui_attr = &ui->attr[i];
 
-			gtk_color_button_get_color(GTK_COLOR_BUTTON(ui_attr->color_attr), &attr->fore_color);
+			GTK_COLOR_BUTTON_GET_COLOR(GTK_COLOR_BUTTON(ui_attr->color_attr), &attr->fore_color);
 			idx = gtk_combo_box_get_active(GTK_COMBO_BOX(ui_attr->combo_attr));
 			attr->indicator_style = combobox_item[idx].indicator_style;
 		}
@@ -357,7 +379,7 @@ static GtkWidget *on_configure_preedit_tweak(GeanyPlugin *plugin, GtkDialog *dia
 		if (idx != -1) {
 			gtk_combo_box_set_active(GTK_COMBO_BOX(ui_attr->combo_attr), idx);
 		}
-		gtk_color_button_set_color(GTK_COLOR_BUTTON(ui_attr->color_attr), &(attr->fore_color));
+		GTK_COLOR_BUTTON_SET_COLOR(GTK_COLOR_BUTTON(ui_attr->color_attr), &(attr->fore_color));
 
 		gtk_box_pack_start(GTK_BOX(ui->vbox_appearance), ui_attr->hbox, FALSE, FALSE, 6);
 		gtk_box_pack_start(GTK_BOX(ui_attr->hbox), ui_attr->label_attr, FALSE, FALSE, 6);
