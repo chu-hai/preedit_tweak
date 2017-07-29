@@ -1,15 +1,16 @@
 # Maintainer: Chuhai
 # Contributor:
 
-pkgname=preedit_tweak-git
+pkgname=geany-preedit-tweak-gtk3-git
 pkgver=0.0.0
 pkgrel=1
 pkgdesc="Tweaks for the Geany's preedit appearance."
 arch=('i686' 'x86_64')
 url="https://github.com/chu-hai/preedit_tweak"
 license=('MIT')
-depends=('geany')
+depends=('geany-gtk3')
 makedepends=('git' 'cmake')
+conflicts=('preedit_tweak-git' 'geany-preedit-tweak-git')
 source=("${pkgname}"::'git+https://github.com/chu-hai/preedit_tweak')
 md5sums=('SKIP')
 
